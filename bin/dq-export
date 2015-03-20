@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var dq = require('../lib/dq.js')
+var dq = require('dq')
 var program = require('commander')
 
 program
