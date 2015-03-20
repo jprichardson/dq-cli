@@ -3,6 +3,7 @@ dq-cli
 
 Command line tools to interface with Redis priority queues created by [dq](https://github.com/jprichardson/node-dq).
 
+[![js-standard-style](https://raw.githubusercontent.com/feross/standard/master/badge.png)](https://github.com/feross/standard)
 
 Install
 -------
