@@ -3,8 +3,6 @@
 var dq = require('../lib/dq.js')
 var byline = require('byline')
 var program = require('commander')
-var fs = require('fs')
-var path = require('path')
 
 program
   .version(require('../package.json').version)
@@ -19,14 +17,14 @@ var count = 0
 
 program.name = program.queue
 program.password = program.auth
-dq.create(program, function(err, q){
+dq.create(program, function (err, q) {
   if (err) {
     console.error('Error: ' + err.message)
     process.exit(1)
   }
 
   var lineStream = byline(process.stdin)
-  lineStream.on('data', function(line){
+  lineStream.on('data', function (line) {
     if (program.shuffle) {
       q.enq(line, Math.random())
     } else {
@@ -35,10 +33,9 @@ dq.create(program, function(err, q){
     count += 1
   })
 
-  lineStream.on('end', function(){
-    setImmediate(function() {
+  lineStream.on('end', function () {
+    setImmediate(function () {
       q.quit()
     })
   })
 })
-
