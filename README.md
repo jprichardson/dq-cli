@@ -23,7 +23,6 @@ Usage
 
       -h, --help                  output usage information
       -V, --version               output the version number
-      -f, --file [inputFile]      input file otherwise the default is STDIN
       -h, --host [host]           host of redis server, the default is localhost
       -a, --auth [password]       password of redis server
       -p, --port [number]         port of redis server, the default is 6379
@@ -50,7 +49,6 @@ or..
 
       -h, --help                  output usage information
       -V, --version               output the version number
-      -f, --file [outputFile]     output file otherwise the default is STDOUT
       -h, --host [host]           host of redis server, the default is localhost
       -a, --auth [password]       password of redis server
       -p, --port [number]         port of redis server, the default is 6379
