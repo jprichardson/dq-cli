@@ -5,7 +5,7 @@ var exit = require('../lib/exit')
 var streams = require('../lib/streams')
 var writeStream = require('../lib/write-stream')
 
-function dqCount (/** process.argv **/) {
+function dqExport (/** process.argv **/) {
   args(program, arguments)
   var s = streams(program)
 
@@ -13,12 +13,16 @@ function dqCount (/** process.argv **/) {
   dq.connect(program, function (err, q) {
     if (err) exit(1, err)
 
-    q.count(function (err, count) {
-      if (err) writeStream(s.error, err)
-      writeStream(s.output, count)
-      q.quit()
-    })
+    function again () {
+      q.deq(function (err, item) {
+        if (err) process.exit(1)
+        if (item == null) process.exit(0)
+        console.log(item)
+        again()
+      })
+    }
+    again()
   })
 }
 
-module.exports = dqCount
+module.exports = dqExport

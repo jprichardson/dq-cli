@@ -1,24 +1,3 @@
 #!/usr/bin/env node
 
-var dq = require('dq')
-var program = require('commander')
-var args = require('../lib/args')
-
-args(program, arguments)
-
-dq.create(program, function (err, q) {
-  if (err) {
-    console.error('Error: ' + err.message)
-    process.exit(1)
-  }
-
-  function again () {
-    q.deq(function (err, item) {
-      if (err) process.exit(1)
-      if (item == null) process.exit(0)
-      console.log(item)
-      again()
-    })
-  }
-  again()
-})
+require('../cli/dq-export').apply(null, process.argv)
