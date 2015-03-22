@@ -3,20 +3,12 @@
 var dq = require('dq')
 var byline = require('byline')
 var program = require('commander')
+var args = require('../lib/args')
 
-program
-  .version(require('../package.json').version)
-  .option('-h, --host [host]', 'host of redis server, the default is localhost')
-  .option('-a, --auth [password]', 'password of redis server')
-  .option('-p, --port [number]', 'port of redis server, the default is 6379')
-  .option('-q, --queue <queueName>', 'name of the queue')
-  .option('-s, --shuffle', 'insert in random order')
-  .parse(process.argv)
+args(program, arguments)
 
 var count = 0
 
-program.name = program.queue
-program.password = program.auth
 dq.create(program, function (err, q) {
   if (err) {
     console.error('Error: ' + err.message)
