@@ -1,3 +1,8 @@
+0.4.0 / 2015-03-22
+------------------
+- changed command line option `-q, --queue` to `-n, --name`
+- added `dq-config`, added option `-c, --config` to each cli tool
+
 0.3.0 / 2015-03-22
 ------------------
 - added `dq-count`
