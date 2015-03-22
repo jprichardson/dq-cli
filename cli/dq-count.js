@@ -1,19 +1,21 @@
 var dq = require('dq')
 var program = require('commander')
 var args = require('../lib/args')
+var exit = require('../lib/exit')
+var streams = require('../lib/streams')
+var writeStream = require('../lib/write-stream')
 
 function count (/** process.argv **/) {
   args(program, arguments)
+  var s = streams(program)
 
-  dq.create(program, function (err, q) {
-    if (err) {
-      console.error('Error: ' + err.message)
-      process.exit(1)
-    }
+  // program contains config
+  dq.connect(program, function (err, q) {
+    if (err) exit(1, err)
 
     q.count(function (err, count) {
-      if (err) console.error(err)
-      console.log(count)
+      if (err) writeStream(s.error, err)
+      writeStream(s.output, count)
       q.quit()
     })
   })
