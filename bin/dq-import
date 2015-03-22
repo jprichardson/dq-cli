@@ -1,33 +1,3 @@
 #!/usr/bin/env node
 
-var dq = require('dq')
-var byline = require('byline')
-var program = require('commander')
-var args = require('../lib/args')
-
-args(program, arguments)
-
-var count = 0
-
-dq.create(program, function (err, q) {
-  if (err) {
-    console.error('Error: ' + err.message)
-    process.exit(1)
-  }
-
-  var lineStream = byline(process.stdin)
-  lineStream.on('data', function (line) {
-    if (program.shuffle) {
-      q.enq(line, Math.random())
-    } else {
-      q.enq(line, count)
-    }
-    count += 1
-  })
-
-  lineStream.on('end', function () {
-    setImmediate(function () {
-      q.quit()
-    })
-  })
-})
+require('../cli/dq-import').apply(null, process.argv)
