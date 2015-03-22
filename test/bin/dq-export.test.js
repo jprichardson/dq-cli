@@ -32,7 +32,7 @@ describe('cmd: export', function () {
       cp.exec('./bin/dq-export ' + args.join(' '), function (err, stdout, stderr) {
         F (err)
         var data = stdout.trim()
-        EQ (data, "hi\nbye\nhello")
+        EQ (data, 'hi\nbye\nhello')
         done()
       })
     })

@@ -14,7 +14,7 @@ function dqCount (/** process.argv **/) {
     if (err) exit(1, err)
 
     q.count(function (err, count) {
-      if (err) writeStream(s.error, err)
+      if (err) writeStream(s.error, {config: program, error: err})
       writeStream(s.output, count)
       q.quit()
     })

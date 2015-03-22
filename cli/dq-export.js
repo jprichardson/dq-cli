@@ -15,9 +15,9 @@ function dqExport (/** process.argv **/) {
 
     function again () {
       q.deq(function (err, item) {
-        if (err) process.exit(1)
-        if (item == null) process.exit(0)
-        console.log(item)
+        if (err) writeStream(s.error, {config: program, error: err})
+        if (item == null) exit(0)
+        writeStream(s.output, item)
         again()
       })
     }
