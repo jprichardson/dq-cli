@@ -22,7 +22,7 @@ describe('cmd: export', function () {
   })
 
   it('should export', function (done) {
-    var args = ['-q', TESTQ]
+    var args = ['-n', TESTQ]
 
     q.enq('hi', 0.1)
     q.enq('bye', 0.2)

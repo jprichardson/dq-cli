@@ -24,7 +24,7 @@ describe('cmd: import', function () {
   describe('> when no shuffle', function () {
     it('should import', function (done) {
       var data = ['a1', 'b1', 'c1']
-      var args = ['-q', TESTQ]
+      var args = ['-n', TESTQ]
 
       var prog = cp.spawn('./bin/dq-import', args)
 
@@ -55,7 +55,7 @@ describe('cmd: import', function () {
   describe('> when shuffle', function () {
     it('should import shuffled', function (done) {
       var data = ['a1', 'b1', 'c1']
-      var args = ['-q', TESTQ, '--shuffle']
+      var args = ['-n', TESTQ, '--shuffle']
 
       var prog = cp.spawn('./bin/dq-import', args)
 

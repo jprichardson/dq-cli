@@ -22,7 +22,7 @@ describe('cmd: count', function () {
   })
 
   it('should return the count', function (done) {
-    var args = ['-q', TESTQ]
+    var args = ['-n', TESTQ]
 
     q.enq('a')
     q.enq('b')
