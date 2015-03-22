@@ -19,7 +19,7 @@
     "test": "standard && mocha"
   },
   "dependencies": {
-    "byline": "~3.1.2",
+    "byline": "^4.2.1",
     "commander": "1.1.x",
     "dq": "^0.5.0"
   },
