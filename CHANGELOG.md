@@ -1,3 +1,7 @@
+0.5.0 / 2015-03-22
+------------------
+- added `dq-list`
+
 0.4.0 / 2015-03-22
 ------------------
 - changed command line option `-q, --queue` to `-n, --name`
