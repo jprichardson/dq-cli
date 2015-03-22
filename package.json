@@ -31,6 +31,7 @@
     "terst": "^0.3.0"
   },
   "bin": {
+    "dq-count": "./bin/dq-count",
     "dq-import": "./bin/dq-import",
     "dq-export": "./bin/dq-export"
   },
