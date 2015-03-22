@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "byline": "^4.2.1",
-    "commander": "1.1.x",
+    "commander": "^2.7.1",
     "dq": "^0.5.0"
   },
   "devDependencies": {
