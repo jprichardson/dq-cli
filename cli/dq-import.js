@@ -1,3 +1,6 @@
+var fs = require('fs')
+var os = require('os')
+var path = require('path')
 var byline = require('byline')
 var dq = require('dq')
 var program = require('commander')
@@ -10,26 +13,60 @@ function dqImport (/** process.argv **/) {
   args(program, arguments)
   var s = streams(program)
 
-  var count = 0
+  var shouldShuffle = !!program.shuffle
 
   // program contains config
   dq.connect(program, function (err, q) {
     if (err) exit(1, err)
 
-    var lineStream = byline(s.input)
-    lineStream.on('data', function (line) {
-      if (program.shuffle) {
-        q.enq(line, Math.random())
-      } else {
-        q.enq(line, count)
-      }
-      count += 1
-    })
-
-    lineStream.on('end', function () {
-      setImmediate(function () {
-        q.quit()
+    if (shouldShuffle) {
+      enqData(s.input, 0)
+    } else {
+      var tmpFile = path.join(os.tmpdir(), Math.random().toString().slice(2) + '-dq.dat')
+      countLines(s.input, tmpFile, function (err, total) {
+        if (err) exit(1, err)
+        enqData(fs.createReadStream(tmpFile), total)
       })
+    }
+
+    // now normalize priority from 0 to 1 for any number of lines
+    function enqData (input, total) {
+      var step = 1 / total
+      var count = 0
+
+      var lineStream = byline(input)
+      lineStream.on('data', function (line) {
+        if (shouldShuffle) {
+          q.enq(line.toString(), Math.random())
+        } else {
+          q.enq(line.toString(), count * step)
+        }
+
+        count += 1
+      })
+
+      lineStream.on('end', function () {
+        setImmediate(function () {
+          q.quit()
+        })
+      })
+    }
+  })
+}
+
+function countLines (input, tmpFile, callback) {
+  var ws = fs.createWriteStream(tmpFile)
+  var count = 0
+  var lineStream = byline(input)
+  lineStream.on('data', function (data) {
+    count += 1
+    ws.write(data)
+    ws.write('\n')
+  })
+
+  lineStream.on('end', function () {
+    setImmediate(function () {
+      callback(null, count)
     })
   })
 }

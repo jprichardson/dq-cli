@@ -32,6 +32,10 @@ describe('cmd: import', function () {
         console.log('stdout: ' + data)
       })
 
+      prog.stderr.on('data', function (data) {
+        console.error('stderr: ' + data)
+      })
+
       data.forEach(function (item) {
         prog.stdin.write(item + '\n')
       })
