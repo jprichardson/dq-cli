@@ -5,6 +5,7 @@ var byline = require('byline')
 var dq = require('dq')
 var program = require('commander')
 var args = require('../lib/args')
+var cfg = require('../lib/config')
 var exit = require('../lib/exit')
 var streams = require('../lib/streams')
 
@@ -12,11 +13,11 @@ function dqImport (/** process.argv **/) {
   program.option('-s, --shuffle', 'insert in random order')
   args(program, arguments)
   var s = streams(program)
+  var config = cfg.readConfigSync(program)
 
   var shouldShuffle = !!program.shuffle
 
-  // program contains config
-  dq.connect(program, function (err, q) {
+  dq.connect(config, function (err, q) {
     if (err) exit(1, err)
 
     if (shouldShuffle) {
