@@ -33,6 +33,7 @@
   },
   "bin": {
     "dq-count": "./bin/dq-count",
+    "dq-delete": "./bin/dq-delete",
     "dq-import": "./bin/dq-import",
     "dq-export": "./bin/dq-export",
     "dq-view": "./bin/dq-view",
