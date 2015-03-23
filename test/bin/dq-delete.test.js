@@ -1,10 +1,9 @@
-var assert = require('assert')
 var cp = require('child_process')
 var async = require('async')
 var dq = require('dq')
 require('terst')
 
-/* global beforeEach, describe, EQ, F, it */
+/* global describe, F, it, T */
 /* eslint-disable no-spaced-func */
 
 describe('cmd: delete', function () {
@@ -17,7 +16,9 @@ describe('cmd: delete', function () {
     }
 
     async.forEach(names, create, function (err) {
+      F (err)
       dq.list({}, function (err, list) {
+        F (err)
         names.forEach(function (name) {
           T (list.indexOf(name) >= 0)
         })

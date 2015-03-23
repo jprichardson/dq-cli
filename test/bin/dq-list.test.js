@@ -1,10 +1,9 @@
-var assert = require('assert')
 var cp = require('child_process')
 var async = require('async')
 var dq = require('dq')
 require('terst')
 
-/* global beforeEach, describe, EQ, F, it */
+/* global describe, F, it, T */
 /* eslint-disable no-spaced-func */
 
 describe('cmd: list', function () {
@@ -17,6 +16,7 @@ describe('cmd: list', function () {
     }
 
     async.forEach(names, create, function (err) {
+      F (err)
       cp.exec('./bin/dq-list', function (err, stdout, stderr) {
         F (err)
         F (stderr)
