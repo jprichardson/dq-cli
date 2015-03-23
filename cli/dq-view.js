@@ -6,6 +6,8 @@ var exit = require('../lib/exit')
 var streams = require('../lib/streams')
 var writeStream = require('../lib/write-stream')
 
+var STEP = 1000
+
 function dqView (/** process.argv **/) {
   args(program, arguments)
   var s = streams(program)
@@ -18,13 +20,14 @@ function dqView (/** process.argv **/) {
     q.count(function (err, total) {
       if (err) exit(1, err)
 
-      // total not used yet, naive approach for now
       function again () {
-        q.peak(count, 1, function (err, res) {
+        q.peak(count, STEP, function (err, res) {
           if (err) writeStream(s.error, {config: program, error: err})
           if (res.length === 0) exit(0)
-          writeStream(s.output, res[0])
-          count += 1
+          res.forEach(function (item) {
+            writeStream(s.output, item)
+          })
+          count += STEP
           again()
         })
       }
