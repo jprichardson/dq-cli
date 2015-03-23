@@ -1,3 +1,8 @@
+0.6.0 / 2015-03-22
+------------------
+- `dq-view` was too slow, optmized
+- added `dq-delete`
+
 0.5.0 / 2015-03-22
 ------------------
 - added `dq-list`

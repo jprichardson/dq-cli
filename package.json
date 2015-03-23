@@ -2,7 +2,7 @@
   "author": "JP Richardson <jprichardson@gmail.com>",
   "name": "dq-cli",
   "description": "Command lines to interface with dq (Redis priority queue)",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "keywords": [
     "dq",
     "priority",
