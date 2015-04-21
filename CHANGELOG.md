@@ -1,3 +1,8 @@
+0.7.0 / 2015-04-21
+------------------
+- upgraded `dq` to `0.7.x`, (can now set `name` and `key` is implicitly updated)
+- `dq-list` now includes the counts
+
 0.6.0 / 2015-03-22
 ------------------
 - `dq-view` was too slow, optmized
