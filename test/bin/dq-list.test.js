@@ -24,7 +24,9 @@ describe('cmd: list', function () {
         var actualNames = stdout.trim().split('\n')
         T (names.length >= 3)
         names.forEach(function (name) {
-          T (actualNames.indexOf(name) >= 0)
+          T (actualNames.some(function (n) {
+            return (n.indexOf(name) === 0)
+          }))
         })
 
         done()

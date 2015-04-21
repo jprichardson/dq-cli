@@ -14,11 +14,30 @@ function dqList (/** process.argv **/) {
   dq.list(config, function (err, list) {
     if (err) exit(1, err)
 
-    list.forEach(function (item) {
-      writeStream(s.output, item)
+    list.sort()
+    var maxLen = list.reduce(function (max, current) {
+      if (max > current.length) return max
+      else return current.length
+    }, 0)
+
+    // pad list items
+    list = list.map(function (item) {
+      return item + Array(maxLen - item.length + 1).join(' ')
     })
 
-    exit(0)
+    var q = dq.connect(config)
+
+    function countIt () {
+      if (list.length === 0) exit(0)
+      var name = list.shift()
+      q.name = name.trim()
+      q.count(function (err, count) {
+        if (err) exit(1, err)
+        writeStream(s.output, name + ' => ' + count)
+        countIt()
+      })
+    }
+    countIt()
   })
 }
 
