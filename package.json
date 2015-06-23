@@ -22,7 +22,7 @@
   "dependencies": {
     "byline": "^4.2.1",
     "commander": "^2.7.1",
-    "dq": "^0.7.0",
+    "dq": "^0.8.0",
     "path-extra": "^1.0.2"
   },
   "devDependencies": {
