@@ -1,3 +1,7 @@
+0.8.0 / 2015-06-23
+------------------
+- upgraded `dq` to `0.8.x` for io.js support
+
 0.7.0 / 2015-04-21
 ------------------
 - upgraded `dq` to `0.7.x`, (can now set `name` and `key` is implicitly updated)
