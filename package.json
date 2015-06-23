@@ -10,6 +10,7 @@
     "redis",
     "cli"
   ],
+  "license": "MIT",
   "homepage": "http://github.com/jprichardson/dq-cli",
   "repository": {
     "type": "git",
