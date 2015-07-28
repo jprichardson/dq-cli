@@ -3,6 +3,7 @@
 - removed `terst` for `assert`
 - made tests working in Trinity
 - upgraded `dq` from `0.8.x` to `0.9.x` (add count to `deq`)
+- `dq-export` now exports much qucker (uses count to pass to `deq`)
 
 0.8.0 / 2015-06-23
 ------------------

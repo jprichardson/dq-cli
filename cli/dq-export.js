@@ -6,6 +6,8 @@ var exit = require('../lib/exit')
 var streams = require('../lib/streams')
 var writeStream = require('../lib/write-stream')
 
+var AMOUNT = 1000
+
 function dqExport (/** process.argv **/) {
   args(program, arguments)
   var s = streams(program)
@@ -15,10 +17,12 @@ function dqExport (/** process.argv **/) {
     if (err) exit(1, err)
 
     function again () {
-      q.deq(function (err, item) {
+      q.deq(AMOUNT, function (err, items) {
         if (err) writeStream(s.error, {config: program, error: err})
-        if (item == null) exit(0)
-        writeStream(s.output, item)
+        if (items == null || items.length === 0) exit(0)
+        items.forEach(function (item) {
+          writeStream(s.output, item)
+        })
         again()
       })
     }
