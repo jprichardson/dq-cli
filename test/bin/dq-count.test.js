@@ -1,9 +1,10 @@
+var assert = require('assert')
 var cp = require('child_process')
 var dq = require('dq')
-require('terst')
+var path = require('path')
 
-/* global beforeEach, describe, EQ, F, it */
-/* eslint-disable no-spaced-func */
+/* global beforeEach, describe, it */
+// trinity: mocha
 
 var TESTQ = 'testq'
 
@@ -12,9 +13,9 @@ describe('cmd: count', function () {
 
   beforeEach(function (done) {
     dq.delete({name: TESTQ}, function (err) {
-      F (err)
+      assert.ifError(err)
       dq.connect({name: TESTQ}, function (err, _q) {
-        F (err)
+        assert.ifError(err)
         q = _q
         done()
       })
@@ -22,16 +23,16 @@ describe('cmd: count', function () {
   })
 
   it('should return the count', function (done) {
-    var args = ['-n', TESTQ]
+    var args = ['-n', TESTQ].join(' ')
 
     q.enq('a')
     q.enq('b')
     q.enq('c')
     q.quit(function (err) {
-      F (err)
-      cp.exec('./bin/dq-count ' + args.join(' '), function (err, stdout, stderr) {
-        F (err)
-        EQ (stdout.trim(), '3')
+      assert.ifError(err)
+      cp.exec(path.resolve(__dirname, '../../bin/dq-count ') + args, function (err, stdout, stderr) {
+        assert.ifError(err)
+        assert.strictEqual(stdout.trim(), '3')
         done()
       })
     })

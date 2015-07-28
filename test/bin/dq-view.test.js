@@ -1,9 +1,10 @@
+var assert = require('assert')
 var cp = require('child_process')
 var dq = require('dq')
-require('terst')
+var path = require('path')
 
-/* global beforeEach, describe, EQ, F, it */
-/* eslint-disable no-spaced-func */
+/* global beforeEach, describe, it */
+// trinity: mocha
 
 var TESTQ = 'testq'
 
@@ -12,9 +13,9 @@ describe('cmd: view', function () {
 
   beforeEach(function (done) {
     dq.delete({name: TESTQ}, function (err) {
-      F (err)
+      assert.ifError(err)
       dq.connect({name: TESTQ}, function (err, _q) {
-        F (err)
+        assert.ifError(err)
         q = _q
         done()
       })
@@ -28,11 +29,11 @@ describe('cmd: view', function () {
     q.enq('bye', 0.2)
     q.enq('hello', 0.3)
     q.quit(function (err) {
-      F (err)
-      cp.exec('./bin/dq-view ' + args.join(' '), function (err, stdout, stderr) {
-        F (err)
+      assert.ifError(err)
+      cp.exec(path.resolve(__dirname, '../../bin/dq-view ') + args.join(' '), function (err, stdout, stderr) {
+        assert.ifError(err)
         var data = stdout.trim()
-        EQ (data, 'hi\nbye\nhello')
+        assert.strictEqual(data, 'hi\nbye\nhello')
         done()
       })
     })

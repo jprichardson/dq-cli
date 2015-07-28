@@ -1,20 +1,22 @@
+var assert = require('assert')
 var cp = require('child_process')
 var dq = require('dq')
-require('terst')
+var path = require('path')
 
-/* global beforeEach, describe, EQ, F, it, T */
-/* eslint-disable no-spaced-func */
+/* global beforeEach, describe, it */
+// trinity: mocha
 
 var TESTQ = 'testq'
 
 describe('cmd: import', function () {
+  var cmd = path.resolve(__dirname, '../../bin/dq-import')
   var q
 
   beforeEach(function (done) {
     dq.delete({name: TESTQ}, function (err) {
-      F (err)
+      assert.ifError(err)
       dq.connect({name: TESTQ}, function (err, _q) {
-        F (err)
+        assert.ifError(err)
         q = _q
         done()
       })
@@ -26,7 +28,7 @@ describe('cmd: import', function () {
       var data = ['a1', 'b1', 'c1']
       var args = ['-n', TESTQ]
 
-      var prog = cp.spawn('./bin/dq-import', args)
+      var prog = cp.spawn(cmd, args)
 
       prog.stdout.on('data', function (data) {
         console.log('stdout: ' + data)
@@ -42,8 +44,8 @@ describe('cmd: import', function () {
 
       prog.on('close', function () {
         q.peak(0, 3, function (err, res) {
-          F (err)
-          EQ (data.join(','), res.join(','))
+          assert.ifError(err)
+          assert.strictEqual(data.join(','), res.join(','))
           done()
         })
       })
@@ -57,7 +59,7 @@ describe('cmd: import', function () {
       var data = ['a1', 'b1', 'c1']
       var args = ['-n', TESTQ, '--shuffle']
 
-      var prog = cp.spawn('./bin/dq-import', args)
+      var prog = cp.spawn(cmd, args)
 
       prog.stdout.on('data', function (data) {
         console.log('stdout: ' + data)
@@ -69,11 +71,11 @@ describe('cmd: import', function () {
 
       prog.on('close', function () {
         q.peak(0, 3, function (err, res) {
-          F (err)
+          assert.ifError(err)
           data.forEach(function (item) {
-            T (res.indexOf(item) >= 0)
+            assert(res.indexOf(item) >= 0)
           })
-          EQ (data.length, 3)
+          assert.strictEqual(data.length, 3)
           done()
         })
       })

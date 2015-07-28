@@ -1,13 +1,15 @@
-var cp = require('child_process')
+var assert = require('assert')
 var async = require('async')
+var cp = require('child_process')
 var dq = require('dq')
-require('terst')
+var path = require('path')
 
-/* global describe, F, it, T */
-/* eslint-disable no-spaced-func */
+/* global describe, it */
+// trinity: mocha
 
 describe('cmd: delete', function () {
   it('should delete the list', function (done) {
+    var args = ['-n', 'testq2'].join(' ')
     var names = ['testq1', 'testq2', 'testq3']
     function create (name, done) {
       var q = dq.connect({name: name})
@@ -16,23 +18,24 @@ describe('cmd: delete', function () {
     }
 
     async.forEach(names, create, function (err) {
-      F (err)
+      assert.ifError(err)
       dq.list({}, function (err, list) {
-        F (err)
+        assert.ifError(err)
         names.forEach(function (name) {
-          T (list.indexOf(name) >= 0)
+          assert(list.indexOf(name) >= 0)
         })
 
-        cp.exec('./bin/dq-delete ' + ['-n', 'testq2'].join(' '), function (err, stdout, stderr) {
-          F (err)
-          F (stderr)
+        cp.exec(path.resolve(__dirname, '../../bin/dq-delete ') + args, function (err, stdout, stderr) {
+          assert.ifError(err)
+          console.error(stderr)
+          assert(!stderr)
 
           dq.list({}, function (err, list) {
-            F (err)
+            assert.ifError(err)
 
-            T (list.indexOf('testq1') >= 0)
-            F (list.indexOf('testq2') >= 0)
-            T (list.indexOf('testq3') >= 0)
+            assert(list.indexOf('testq1') >= 0)
+            assert(list.indexOf('testq2') === -1)
+            assert(list.indexOf('testq3') >= 0)
             done()
           })
         })

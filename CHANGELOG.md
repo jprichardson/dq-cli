@@ -1,3 +1,8 @@
+0.9.0 / 2015-07-28
+------------------
+- removed `terst` for `assert`
+- made tests workin in Trinity
+
 0.8.0 / 2015-06-23
 ------------------
 - upgraded `dq` to `0.8.x` for io.js support

@@ -1,10 +1,11 @@
+var assert = require('assert')
 var cp = require('child_process')
 var async = require('async')
 var dq = require('dq')
-require('terst')
+var path = require('path')
 
-/* global describe, F, it, T */
-/* eslint-disable no-spaced-func */
+/* global describe, it */
+// trinity: mocha
 
 describe('cmd: list', function () {
   it('should the list', function (done) {
@@ -16,15 +17,15 @@ describe('cmd: list', function () {
     }
 
     async.forEach(names, create, function (err) {
-      F (err)
-      cp.exec('./bin/dq-list', function (err, stdout, stderr) {
-        F (err)
-        F (stderr)
+      assert.ifError(err)
+      cp.exec(path.resolve(__dirname, '../../bin/dq-list'), function (err, stdout, stderr) {
+        assert.ifError(err)
+        assert(!stderr)
 
         var actualNames = stdout.trim().split('\n')
-        T (names.length >= 3)
+        assert(names.length >= 3)
         names.forEach(function (name) {
-          T (actualNames.some(function (n) {
+          assert(actualNames.some(function (n) {
             return (n.indexOf(name) === 0)
           }))
         })
