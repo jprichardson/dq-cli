@@ -2,6 +2,7 @@
 ------------------
 - removed `terst` for `assert`
 - made tests workin in Trinity
+- ugpraded `dq` from `0.8.x` to `0.9.x` (add count to `deq`)
 
 0.8.0 / 2015-06-23
 ------------------
